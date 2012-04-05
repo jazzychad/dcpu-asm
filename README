@@ -6,3 +6,6 @@ see: https://github.com/swetland/dcpu16
 You can run the *.out.hex using swetland's c virtual machine, or
 online at http://jazzychad.net/dcpu.html
 
+*.d16 file are assembly instructions for dcpu-16
+*.out.hex files are assembled opcodes for dcpu-16
+*.run files are output results of running the *.out.hex program through an emulator
