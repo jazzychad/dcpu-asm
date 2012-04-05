@@ -1,4 +1,4 @@
-; fib.sum
+; fib.d16
 ; compute the nth fibonacci number
 ;
 ; basic fibonacci function definition:
