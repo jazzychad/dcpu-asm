@@ -39,8 +39,7 @@
 
 SET X, 10
 SET A, X
-SET J, fib
-JSR J
+JSR fib
 SET Z, A ; put result in Z
 SET PC, crash ; end program
 
@@ -59,13 +58,11 @@ SET J, A
 SUB J, 2
 SET PUSH, J
 SET A, I
-SET Z, fib
 JSR fib
 SET J, POP
 SET X, A ; save return value of fib(n-1)
 SET PUSH, X
 SET A, J
-SET Z, fib
 JSR fib
 SET X, POP
 SET Y, A ; save return value of fib(n-2)
