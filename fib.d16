@@ -1,0 +1,84 @@
+; fib.sum
+; compute the nth fibonacci number
+;
+; basic fibonacci function definition:
+;
+; fib = function(n) {
+;   if (n == 0)
+;     return 0;
+;   if (n == 1)
+;     return 1;
+;   if (n == 2)
+;     return 1;
+;   else
+;     return fib(n-1) + fib(n-2);
+; }
+;
+; or put another way:
+;
+; fib = function(n) {
+;   if (n == 0)
+;     ret = 0;
+;     return ret;
+;   if (n == 1)
+;     ret = 1;
+;     return ret;
+;   if (n == 2)
+;     ret = 1;
+;     return 1;
+;   else
+;     a = fib(n-1);
+;     b = fib(n-2);
+;     ret = a;
+;     ret += b;
+;     return ret;
+; }
+
+; compute the 10th fibonacci number (store n in X)
+; store result in register Z when finished
+
+SET X, 10
+SET A, X
+SET J, fib
+JSR J
+SET Z, A ; put result in Z
+SET PC, crash ; end program
+
+:fib SET I, 0
+IFE A, I
+SET PC, bc1
+SET I, 1
+IFE A, I
+SET PC, bc2
+SET I, 2
+IFE A, I
+SET PC, bc2
+SET I, A
+SUB I, 1
+SET J, A
+SUB J, 2
+SET PUSH, J
+SET A, I
+SET Z, fib
+JSR fib
+SET J, POP
+SET X, A ; save return value of fib(n-1)
+SET PUSH, X
+SET A, J
+SET Z, fib
+JSR fib
+SET X, POP
+SET Y, A ; save return value of fib(n-2)
+SET A, X
+ADD A, Y
+SET PC, POP
+
+:bc1 SET A, 0
+SET PC, POP
+
+:bc2 SET A, 1
+SET PC, POP
+
+
+:crash SET [0x1000], 0xfff0
+SET PC, 0x1000
