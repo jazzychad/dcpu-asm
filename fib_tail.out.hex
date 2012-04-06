@@ -1,0 +1,28 @@
+a831    0000:    SET X, 10
+0c01    0001:    SET A, X
+7c10    0002:    JSR 0x0007
+0007
+0051    0004:    SET Z, A
+7dc1    0005:    SET PC, 0x0017
+0017
+8411    0007:    SET B, 1
+8021    0008:    SET C, 0
+7c10    0009:    JSR 0x000c
+000c
+61c1    000b:    SET PC, POP
+800c    000c:    IFE A, 0
+7dc1    000d:    SET PC, 0x0015
+0015
+8403    000f:    SUB A, 1
+0861    0010:    SET I, C
+0421    0011:    SET C, B
+1812    0012:    ADD B, I
+7dc1    0013:    SET PC, 0x000c
+000c
+0801    0015:    SET A, C
+61c1    0016:    SET PC, POP
+7de1    0017:    SET [0x1000], 0xfff0
+1000
+fff0
+7dc1    001a:    SET PC, 0x1000
+1000

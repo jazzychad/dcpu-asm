@@ -1,0 +1,41 @@
+; fib_tail.d16
+; tail recursive fibonacci
+
+;fib = function(n) {
+;  fib_tail(n, 1, 0);
+;}
+;
+;fib_tail = function(n, a, b) {
+;  if (n == 0)
+;    return b;
+;  else
+;    return fib_tail(n-1, a+b, a);
+;}
+
+; set initial n value in X register
+; final value will be in Z register
+
+SET X, 10
+SET A, X
+JSR fib
+SET Z, A
+SET PC, crash
+
+:fib SET B, 1
+SET C, 0
+JSR fibtail ; could also just jump to fibtail
+SET PC, POP
+
+:fibtail IFE A, 0
+SET PC, fibtailret
+SUB A, 1
+SET I, C
+SET C, B
+ADD B, I
+SET PC, fibtail
+
+:fibtailret SET A, C
+SET PC, POP
+
+:crash SET [0x1000], 0xfff0
+SET PC, 0x1000
