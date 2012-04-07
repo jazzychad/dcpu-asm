@@ -53,7 +53,7 @@ SET PC, l2
 SET I, A
 MOD I, 0xa
 DIV A, 0xa
-SET PUSH, i
+SET PUSH, I
 ADD J, 1
 SET PC, loop1
 
