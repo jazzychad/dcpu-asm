@@ -1,0 +1,47 @@
+7c31    0000:    SET X, 0xffff
+ffff
+7c41    0002:    SET Y, 0x8000
+8000
+0c01    0004:    SET A, X
+1011    0005:    SET B, Y
+7c10    0006:    JSR 0x0010
+0010
+0051    0008:    SET Z, A
+7dc1    0009:    SET PC, 0x000b
+000b
+7df1    000b:    SET 0x1000, 0xfff0
+1000
+fff0
+7dc1    000e:    SET PC, 0x1000
+1000
+8071    0010:    SET J, 0
+800c    0011:    IFE A, 0
+7dc1    0012:    SET PC, 0x001b
+001b
+0061    0014:    SET I, A
+a866    0015:    MOD I, 10
+a805    0016:    DIV A, 10
+19a1    0017:    SET PUSH, I
+8472    0018:    ADD J, 1
+7dc1    0019:    SET PC, 0x0011
+0011
+8051    001b:    SET Z, 0
+807c    001c:    IFE J, 0
+7dc1    001d:    SET PC, 0x002a
+002a
+6061    001f:    SET I, POP
+7c01    0020:    SET A, 0x0030
+0030
+1802    0022:    ADD A, I
+0421    0023:    SET C, B
+1422    0024:    ADD C, Z
+00a1    0025:    SET [C], A
+8452    0026:    ADD Z, 1
+8473    0027:    SUB J, 1
+7dc1    0028:    SET PC, 0x001c
+001c
+0421    002a:    SET C, B
+1422    002b:    ADD C, Z
+80a1    002c:    SET [C], 0
+1401    002d:    SET A, Z
+61c1    002e:    SET PC, POP
