@@ -1,0 +1,79 @@
+; itoa.d16
+; implmentation of the itoa stdlib function
+
+; itoa takes an integer and places the string representation in the
+; buffer provided standard itoa function returns char* which is the
+; value of the buffer passed in.
+
+; this implementation returns the length of the string created (NOT
+; including the terminating null byte) this will be useful for dcpu
+; since you will most likely be manipulating the video display and
+; want to know how far to offset the next value in the video buffer
+
+;int itoa(uint16_t n, char *p) {
+; j =0;
+; while(n > 0) {
+;   i = n % 10;
+;   n = n / 10;
+;   push i;
+;   j++;
+; }
+; z = 0;
+; while (j > 0) {
+;   i = pop;
+;   a = '0' + i; // '0' = 0x30
+;   [p + z] = a;
+;   j--;
+;   z++;
+; }
+; return z;
+;}
+
+; set integer in X
+; set char pointer in Y
+; result will be displayed on console
+; return value will be placed in Z
+
+:main SET X, 0xffff
+SET Y, 0x8000
+SET A, X
+SET B, Y
+JSR itoa
+SET Z, A
+SET PC, crash
+
+:crash SET 0x1000, 0xfff0
+SET PC, 0x1000
+
+:itoa_start
+
+:itoa SET J, 0
+:loop1 IFE A, 0
+SET PC, l2
+SET I, A
+MOD I, 0xa
+DIV A, 0xa
+SET PUSH, i
+ADD J, 1
+SET PC, loop1
+
+:l2 SET Z, 0
+:loop2 IFE J, 0
+SET PC, loop2end
+SET I, POP
+SET A, 0x30 ; '0'
+ADD A, I
+SET C, B
+ADD C, Z
+SET [C], A
+ADD Z, 1
+SUB J, 1
+SET PC, loop2
+
+:loop2end SET C, B
+ADD C, Z
+SET [C], 0x0 ; null terminate
+:itoaret SET A, Z
+SET PC, POP
+
+:itoa_end
